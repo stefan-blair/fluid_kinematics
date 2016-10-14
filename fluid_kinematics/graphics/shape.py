@@ -1,4 +1,3 @@
-import pyglet
 from pyglet.gl import *
 from vectors import Vector
 
@@ -18,10 +17,10 @@ class Shape(object):
 
 		glBegin(self.glShape)
 
-		glColor3ub( self.color.x, self.color.y, self.color.z )
+		glColor3ub(self.color.x, self.color.y, self.color.z)
 		for point in self.points:
 			scaledPoint = point * self.scale
-			glVertex3f( scaledPoint.x, scaledPoint.y, scaledPoint.z )
+			glVertex3f(scaledPoint.x, scaledPoint.y, scaledPoint.z)
 
 		glEnd()
 
@@ -30,11 +29,12 @@ class Line(Shape):
 		super(Line, self).__init__(
 			[start, end],
 			color,
-			glShape = GL_LINES )
+			glShape = GL_LINES
+		)
 
 class Point(Shape):
 	def __init__(self, p, color, pointSize=4):
-		super(Point, self).__init__( [p], color, glShape = GL_POINTS )
+		super(Point, self).__init__([p], color, glShape = GL_POINTS)
 		self.pointSize = pointSize
 
 	def draw(self):

@@ -1,4 +1,3 @@
-import shapely.geometry as geometry
 from scipy.spatial import ConvexHull
 
 from vectors import Vector

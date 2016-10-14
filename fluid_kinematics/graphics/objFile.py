@@ -1,5 +1,4 @@
-import pyglet
-from pyglet.gl import *
+from pyglet.gl import GL_POLYGON, GL_LINE
 
 from vectors import Vector
 from graphics import Shape

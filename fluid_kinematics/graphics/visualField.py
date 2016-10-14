@@ -1,8 +1,6 @@
-import pyglet
 from pyglet.gl import *
 
 from vectors import Vector
-from fields import VectorField
 from graphics import Shape, Line, Point, raycast3D
 
 
@@ -74,26 +72,25 @@ class VisualField(Shape):
 		x2, y2, z2 = self.bounds.asArray()
 		xg, yg, zg = self.fieldResolution.asArray()
 
-		shapes = self.shapes
 		field = self.field
 		elements = []
 		raycasted = self.raycasted
 
 		if self.fieldVisible:
 			fieldColor = self.fieldColor
-			for xi, x in enumerate(xrange( x1, x2, xg )):
-				for yi, y in enumerate(xrange( y1, y2, yg )):
-					for zi, z in enumerate(xrange( z1, z2, zg )):
+			for xi, x in enumerate(xrange(x1, x2, xg)):
+				for yi, y in enumerate(xrange(y1, y2, yg)):
+					for zi, z in enumerate(xrange(z1, z2, zg)):
 						point = Vector(x, y, z)
 						if not raycasted[xi][yi][zi]:
 							continue
 						v = field(point, frame)
-						elements.append( Line( point, point + v, fieldColor ) )
+						elements.append(Line(point, point + v, fieldColor))
 		if self.particleVisible:
 			particleColor = self.particleColor
 			time = self.time
 			for particle in self.particles:
-				elements.append( Point(particle(time), particleColor, pointSize=6) )
+				elements.append(Point(particle(time), particleColor, pointSize=6))
 
 		if self.pathlines:
 			for pathline in self.pathlines:
@@ -113,11 +110,11 @@ class VisualField(Shape):
 			prev = particle(0)
 			while True:
 				time += pathResolution
-				next = particle(time)
-				if not raycast3D(shapes, next):
+				nextParticle = particle(time)
+				if not raycast3D(shapes, nextParticle):
 					break
-				elements.append( Line(prev, next, pathColor) )
-				prev = next
+				elements.append(Line(prev, nextParticle, pathColor))
+				prev = nextParticle
 		self.pathlines = elements
 
 
@@ -126,7 +123,5 @@ class VisualField(Shape):
 		self.elements = self.render(time)
 
 	def draw(self):
-		time = self.time
-		particleColor = self.particleColor
 		for element in self.elements:
 			element.draw()
