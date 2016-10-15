@@ -1,50 +1,67 @@
 from vectors import Vector
 from fields import VectorField, Pathline, materialDerivative
-from graphics import Window, Shape, Line, Point, ObjFile, raycast3D, VisualField
+from graphics import Window, VisualField, Cube
 
+window = Window( 600, 600, 'Fluid Kinematics' )
 
-window = Window( 600, 600, 'main' )
+# bounding points for the box
+cubeStart = Vector(-15, -15, 0)
+cubeEnd = Vector(15, 15, 100)
+# cube shape to be rendered as bounding box
+# there will be two, one showing the particles and one showing the fields, seperately
+particleCube = Cube(cubeStart, cubeEnd, Vector(255, 255))
+fieldCube = Cube(cubeStart - Vector(0, 0, 100), cubeEnd - Vector(0, 0, 100), Vector(255, 255))
 
-window.addShape(Line(Vector(),Vector(1000),Vector(255,0,0)))
-window.addShape(Line(Vector(),Vector(0,1000),Vector(0,255,0)))
-window.addShape(Line(Vector(),Vector(0,0,1000),Vector(0,0,255)))
+# add the cube shapes to the window for rendering
+window.addShape(particleCube)
+window.addShape(fieldCube)
 
-
-obj = ObjFile('container.obj')
-
-for shape in obj.shapes:
-	shape.points = map(lambda p:p*5 + Vector(10), shape.points)
-
-map( lambda s: window.addShape(s), obj.shapes)
-
-
+# math and physics stuff here.  define a velocity field and its three dimensional functions
 V = VectorField(
-	u = lambda v, t: -v.x/5 + t*2,
-	w = lambda v, t: v.z/5 + t*2,
+	u = lambda v, t: v.y / 2,
+	v = lambda v, t: -v.x / 2,
+ 	w = lambda v, t: v.z / 2
 )
+# calculate the acceleration field by taking the material derivative of the velocity field
+# this works also for any other attribute, such as temperature or pressure
 A = materialDerivative(V)
 
-p = Vector(10, 0, -5)
-P = Pathline(V, p)
+# trace the paths of a bunch of particles in the field
+pathlines = []
+for x in range(-9,9,3):
+	for y in range(-9, 9, 3):
+		pathlines.append(Pathline(V, Vector(x, y, 2)))
 
-#pathlines = []
-#for z in xrange(-5, 5):
-#	pathlines.append(Pathline(V, Vector(10, 0, z) ) )
-
-#field, shapes, anchor=Vector(-25,-25,-25), bounds=Vector(25,25,25), gran=Vector(5,5,5), timestep, renderDistance
-g = 3
-r = 15 * g
+# options for customizing the fields
 options = {
-	'anchor' : Vector(0, 0, -r),
-	'bounds' : Vector(r, 1, r),
-	'fieldResolution' : Vector(g, 1, g),
+	# contains field to within these bounds
+	'anchor' : particleCube.start,
+	'bounds' : particleCube.end,
+
+	'fieldResolution' : Vector(7, 7, 7),
 	'pathlines' : True,
-	'pathResolution' : 0.2
+	# hide the vector field
+	'fieldVisible' : False,
+	'pathResolution' : 0.2,
+	'fieldColor' : Vector(255)
 }
-VField = VisualField(V, obj.shapes, options, [P])
-#AField = VisualField(A, obj.shapes, anchor=Vector(0, 0, -r), bounds=Vector(r, 1, r), gran=Vector(g,1,g), fieldColor=Vector(z=255) )
+ 
+# visualize the velocity field with the given options
+# note, only the pathlines are visible, not the actual fields
+VField = VisualField(V, [particleCube], options, pathlines)
+window.addShape(VField)
+
+# here, render both the velocity and acceleration fields, with no particles
+options['anchor'] = fieldCube.start
+options['bounds'] = fieldCube.end
+options['fieldVisible'] = True
+
+VField = VisualField(V, [fieldCube], options)
+options['fieldColor'] = Vector(0, 255)
+AField = VisualField(A, [fieldCube], options)
 
 window.addShape(VField)
-#window.addShape(AField)
+window.addShape(AField)
 
+# render the window
 window.render()

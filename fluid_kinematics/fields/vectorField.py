@@ -1,4 +1,3 @@
-import scipy.integrate as integrate
 from vectors import Vector	# needed to represent vectors
 
 

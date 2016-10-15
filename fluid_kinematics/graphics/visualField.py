@@ -5,21 +5,32 @@ from graphics import Shape, Line, Point, raycast3D
 
 
 defaultOptions = {
-	'anchor' : Vector(-25, -25, -25),			# point A of bounding box.  Minimum values in each direction.
-	'bounds' : Vector( 25,  25,  25),			# point B of bounding box.  Maximum values in each direaction.
-	'fieldResolution' : Vector(5, 5, 5),			# the step in each direction.
-	'fieldColor' : Vector(255, 0, 255),			# the color of the vector field lines.
-	'fieldVisible' : True,					# determains if the vector field lines should be drawn.
-	'particleColor' : Vector(255, 255, 0),			# the color of the particles.
-	'particleVisible' : True,				# determains if the particles should be drawn.
-	'pathlines' : False,					# determains if pathlines of each particle should be drawn.
-	'pathResolution' : 0.5,					# the size of each timestep forwards when calculating the next point in time.
-	'pathColor' : Vector(0, 255, 255),			# the color of the pathlines.
+	# point A of bounding box.  Minimum values in each direction.
+	'anchor' : Vector(-25, -25, -25),
+	# point B of bounding box.  Maximum values in each direaction.
+	'bounds' : Vector( 25,  25,  25),
+	# the step in each direction.
+	'fieldResolution' : Vector(5, 5, 5),
+	# the color of the vector field lines.
+	'fieldColor' : Vector(255, 0, 255),
+	# determains if the vector field lines should be drawn.
+	'fieldVisible' : True,
+	# the color of the particles.
+	'particleColor' : Vector(255, 255, 0),
+	# determains if the particles should be drawn.
+	'particleVisible' : True,
+	# determains if pathlines of each particle should be drawn.
+	'pathlines' : False,
+	# the size of each timestep forwards when calculating the next point in time.
+	'pathResolution' : 0.5,
+	# the color of the pathlines.
+	'pathColor' : Vector(0, 255, 255),
 }
 
 class VisualField(Shape):
 	def __init__(self, field, shapes, options={}, particles=[] ):
 		super(VisualField, self).__init__([])
+
 		self.field = field
 		self.shapes = shapes
 		self.particles = particles

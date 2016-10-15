@@ -26,11 +26,11 @@ class ObjFile:
 				pass
 			elif components[0] == 'v':
 				# add verticies by casting components 1-3 into floats, and then vectors
-				self.verticies.append( Vector( *map(float, components[1:4]) ) )
+				self.verticies.append(Vector(*map(float, components[1:4])))
 			elif components[0] == 'f':
 				# add faces by splitting each argument ( vertex / texture / normal ) into just ( vertex )
 				# and casting to integers
-				points = map( lambda s: self.verticies[ int(s.split('/')[0]) - 1 ], components[1:] )
-				shape = Shape( points, Vector( 0, 255, 255 ), glShape = GL_POLYGON, glPolygonMode = GL_LINE )
-				self.shapes.append( shape )
+				points = map(lambda s: self.verticies[ int(s.split('/')[0]) - 1 ], components[1:])
+				shape = Shape(points, Vector( 0, 255, 255 ), glShape = GL_POLYGON, glPolygonMode = GL_LINE)
+				self.shapes.append(shape)
 		f.close()

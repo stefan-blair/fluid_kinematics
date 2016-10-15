@@ -1,7 +1,3 @@
-from vectors import Vector
-from fields import VelocityField, PositionField, AccelerationField
-
-
 # this class describes a particle, including all data required to accurately describe its position and motion.
 
 EmptyField = lambda v: 0
@@ -14,6 +10,3 @@ class Particle:
 		self.initialPosition = initialPosition
 		self.velocity = velocity
 		self.acceleration = acceleration
-
-	def position( t = 0 ):
-#		for i in xrange(t):

@@ -1,6 +1,9 @@
 from pyglet.gl import *
 from pyglet.window import key
 
+from vectors import Vector
+from shape import Line
+
 class Window(pyglet.window.Window):
 	xRotation = yRotation = 30
 	scale = 2
@@ -13,8 +16,12 @@ class Window(pyglet.window.Window):
 		self.timestep = timestep
 		self.time = time
 
-		self.shapes = []
-
+		self.shapes = [
+			Line(Vector(), Vector(1000), Vector(255,0,0)),
+			Line(Vector(), Vector(0, 1000), Vector(0, 255, 0)),
+			Line(Vector(), Vector(0, 0, 1000), Vector(0, 0, 255))
+		]
+		
 		glClearColor(0, 0, 0, 1)
 		glEnable(GL_DEPTH_TEST)
 
