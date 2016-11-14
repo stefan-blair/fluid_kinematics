@@ -5,7 +5,7 @@ from vectors import Vector
 # returns a function that takes a single argument
 # and returns the partial derivative of f with respect to respect
 # at position pos, where pos.respect = the single argument.
-def partialDerivative( f, respect, v, pos, t=0 ):
+def partialDerivative( f, respect, v, pos, t = 0 ):
 	def g(r):
 		x, y, z = pos.asArray()
 		args = [x, y, z, t]

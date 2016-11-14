@@ -52,6 +52,3 @@ def VectorField( u=NoFunction, v=NoFunction, w=NoFunction ):
 	FieldFunction.w = w
 
 	return FieldFunction
-
-
-# add in the del operators (gradiant, curl, divergence, etc.)

@@ -6,7 +6,9 @@ from vectors import Vector
 
 
 def materialDerivativeComponent( field, f ):
-	def s( pos, t=0 ):
+	# create a function that takes in a position and optional time t defaulting
+	# to 0
+	def s( pos, t = 0 ):
 		dt = partialDerivative( f, 3, t, pos, t )
 		dx = field.u(pos,t) * partialDerivative( f, 0, pos.x, pos, t )
 		dy = field.v(pos,t) * partialDerivative( f, 1, pos.y, pos, t )

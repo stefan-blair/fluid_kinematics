@@ -15,8 +15,10 @@ class ObjFile:
 		f = file(name, 'r')
 		data = f.read().split('\n')
 
-		self.verticies = []		# an array of verticies (Vector objects) containing all vertex in the file
-		self.shapes = []		# an array of shapes (Vector array) containing all faces in the file
+		# an array of verticies (Vector objects) containing all vertex in the file
+		self.verticies = []
+		# an array of shapes (Vector array) containing all faces in the file
+		self.shapes = []
 
 		for d in data:
 			components = d.split(' ')
